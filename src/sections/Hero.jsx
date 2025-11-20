@@ -50,13 +50,27 @@ import HeroExperience from "../components/HeroModels/HeroExperience";
                             <h1>that Deliver Results</h1>
                         </div>
 
-                        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
+                        {/* <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
                             Hi, I'm Luis, a Technology Executive rooted in the Space Coast,<br />
                             driving innovation across SaaS, AI automation, and modern web<br />
                             technologies. With a passion for transforming ideas into<br />
                             scalable solutions, I blend strategic leadership with hands-on<br />
                             engineering to build products that deliver real impact.<br />
+                        </p> */}
+
+                        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
+                            Hi, I’m Luis, a Technology Executive based on the Space Coast<br />
+                            with 20+ years of full‑stack engineering experience and 10+ years<br />
+                            leading enterprise technology organizations. I drive transformation<br />
+                            across SaaS, AI automation, and cloud‑native platforms, aligning<br />
+                            engineering strategy with business growth. By blending strategic<br />
+                            leadership with hands‑on technical depth, I’ve scaled teams to 100+<br />
+                            engineers, delivered platforms supporting $300M+ revenue, and<br />
+                            achieved compliance across SOC2, PCI‑DSS, HIPAA, and GDPR —<br />
+                            building solutions that deliver measurable impact.<br />
                         </p>
+
+
                         <Button
                             text="See My Work"
                             className="md:w-80 md:h-16 w-60 h-12"

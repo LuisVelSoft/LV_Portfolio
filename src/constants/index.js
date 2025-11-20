@@ -29,11 +29,25 @@ const words = [
 ];
 
 const counterItems = [
-  { value: 15, suffix: "+", label: "Years of Experience" },
-  { value: 200, suffix: "+", label: "Satisfied Clients" },
-  { value: 108, suffix: "+", label: "Completed Projects" },
-  { value: 90, suffix: "%", label: "Client Retention Rate" },
+  {
+    // Box 1: Career arc with two stacked stats
+    stacked: [
+      { value: 20, suffix: "+", label: "Years Full-Stack Software Development" },
+      { value: 10, suffix: "+", label: "Years of Engineering Leadership" }
+    ]
+  },
+
+  // Box 2: Revenue impact
+  { value: 300, prefix: "$", suffix: "M+", label: "Platforms Supporting Enterprise Revenue Growth" },
+
+  // Box 3: Team scale
+  { value: 100, suffix: "+", label: "Engineers Scaled and Mentored Across Global Teams" },
+
+  // Box 4: Compliance achievements
+  { value: 6, label: "Major Compliance Standards Achieved (SOC2, PCI-DSS, HIPAA, GDPR, NAIC, ISO-27001)" }
 ];
+
+
 
 const logoIconsList = [
   {
