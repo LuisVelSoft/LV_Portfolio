@@ -4,7 +4,7 @@ import gsap from "gsap";
 import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
 import { words } from "../constants";
-import HeroExperience from "../components/HeroModels/HeroExperience";
+// Replaced HeroExperience 3D model with a static image (LuisPortfolioImage.png)
 
  const Hero = () => {
     useGSAP(() => {
@@ -46,17 +46,9 @@ import HeroExperience from "../components/HeroModels/HeroExperience";
                                     </span>
                                 </span>
                             </h1>
-                            <h1>into Real Projects</h1>
+                            <h1>into Innovative Projects</h1>
                             <h1>that Deliver Results</h1>
                         </div>
-
-                        {/* <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-                            Hi, I'm Luis, a Technology Executive rooted in the Space Coast,<br />
-                            driving innovation across SaaS, AI automation, and modern web<br />
-                            technologies. With a passion for transforming ideas into<br />
-                            scalable solutions, I blend strategic leadership with hands-on<br />
-                            engineering to build products that deliver real impact.<br />
-                        </p> */}
 
                         <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
                             Hi, I’m Luis, a Technology Executive based on the Space Coast<br />
@@ -79,12 +71,25 @@ import HeroExperience from "../components/HeroModels/HeroExperience";
                     </div>
                 </header>
 
-                {/* RIGHT: 3D Model or Visual */}
-                <figure>
+
+                {/* RIGHT: Static image preview */}
+                <figure className="hero-visual">
                     <div className="hero-3d-layout">
-                        <HeroExperience />
+                        <picture>
+                            <img
+                                src="/images/LuisPortfolioImage.png"
+                                alt="Luis Velasco portfolio preview"
+                                className="w-full h-full object-contain rounded-lg"
+                                loading="lazy"
+                                decoding="async"
+                                width="1200"
+                                height="800"
+                            />
+                        </picture>
                     </div>
                 </figure>
+
+
             </div>
 
             <AnimatedCounter />

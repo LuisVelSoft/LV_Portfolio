@@ -36,26 +36,26 @@ const ShowcaseSection = () => {
                     {/* LEFT */}
                     <div className="first-project-wrapper" ref={project1Ref}>
                         <div className="image-wrapper">
-                            <img src="/images/project1.png" alt="Ryde"/>
+                            <img src="/images/project1.png" alt="Orion180’s My180"/>
                         </div>
                         <div className="text-content">
-                            <h2>On-Demand Rides Made Simple with a Powerful, User-Friendly App called Ryde</h2>
-                            <p>An app built with React Native, Expo, & TailwindCSS for a fast, user-friendly experience.</p>
+                            <h2>Orion180’s My180 empower policyholders to stay connected and in control of their insurance while enabling agents to quote, bind, and manage policies on the go, making it a first‑of‑its‑kind solution that simplifies workflows across desktop and mobile</h2>
+                            <p>Built with Vue, .NET, SQL, Azure for scalable, responsive, and user-friendly experience.</p>
                         </div>
                     </div>
                     {/* RIGHT */}
                     <div className="project-list-wrapper overflow-hidden">
                         <div className="project" ref={project2Ref}>
-                            <div className="image-wrapper bg-[#ffefdb]">
-                                <img src="/images/project2.png" alt="Library Management Platform"/>
+                            <div className="image-wrapper bg-[#4682B4]">
+                                <img src="/images/project2.png" alt="Satcom Direct's SD Pro & SD Scheduler"/>
                             </div>
-                            <h2>Library Management Platform</h2>
+                            <h2>SD Pro provides operators with real‑time insights into flight operations, connectivity, and aircraft performance, while SD Scheduler ensures seamless coordination of crew, aircraft, and resources. Combined, they create a powerful platform that reduces complexity and empowers aviation teams to operate with precision.</h2>
                         </div>
                         <div className="project" ref={project3Ref}>
-                            <div className="image-wrapper bg-[#ffe7eb]">
-                                <img src="/images/project3.png" alt="YC Directory"/>
+                            <div className="image-wrapper bg-[#5E7D7E]">
+                                <img src="/images/project3.png" alt="Globe Wireless' Globe Mapping, GCC, Globe Relay, & Globe Forms"/>
                             </div>
-                            <h2>YC Directory - A Startup Showcase App</h2>
+                            <h2>Globe Mapping was a geospatial tool for monitoring ship positions, routes, and satellite communication footprints across global fleets. Additional projects included GCC, Globe Relay, and Globe Forms.</h2>
                         </div>
                     </div>
                 </div>
