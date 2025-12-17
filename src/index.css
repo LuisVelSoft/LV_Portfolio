@@ -477,3 +477,24 @@ section {
 .card:hover::before {
   opacity: 1;
 }
+
+/* Fixed small copyright badge shown in browser (non-interactive) */
+.site-footer-fixed {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+@media (max-width: 480px) {
+  .site-footer-fixed {
+    display: none;
+  }
+}
