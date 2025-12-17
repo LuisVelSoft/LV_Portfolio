@@ -1,0 +1,9 @@
+{
+  "ServiceArn": "arn:aws:apprunner:us-east-1:378743674489:service/portfolio-app/4762fce75ecc4af6bca2d932f283fae5",
+  "SourceConfiguration": {
+    "ImageRepository": {
+      "ImageIdentifier": "378743674489.dkr.ecr.us-east-1.amazonaws.com/portfolio-app:latest",
+      "ImageRepositoryType": "ECR"
+    }
+  }
+}
