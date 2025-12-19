@@ -1,7 +1,12 @@
 import React from 'react'
 import TitleHeader from '../components/TitleHeader'
 import ContactExperience from '../components/Models/ContactExperience';
+import emailjs from '@emailjs/browser';
 
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 const Contact = () => {
   const [formData, setFormData] = React.useState({
@@ -9,28 +14,45 @@ const Contact = () => {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitMessage, setSubmitMessage] = React.useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-        formData,
-        [name]: value
-    });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   } 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted:", formData);
-    // Reset form
-    setFormData({
-        name: '',   
-        email: '',
-        message: ''
-    });
+    setIsSubmitting(true);
+    setSubmitMessage('');
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message
+          
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSubmitMessage('Message sent successfully!');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Email send failed:', error);
+      setSubmitMessage('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
    
-
   return (
     <section id="contact" className="flex-center section-padding">
         <div className="w-full h-full md:px-10 px-5">
@@ -77,13 +99,17 @@ const Contact = () => {
                                     value={formData.message}
                                     onChange={handleChange} 
                                     required
-                                >
-                                </textarea>
+                                />
                             </div>
-                            <button type="submit">
+                            {submitMessage && (
+                                <p className={`text-sm ${submitMessage.includes('successfully') ? 'text-green-500' : 'text-red-500'}`}>
+                                    {submitMessage}
+                                </p>
+                            )}
+                            <button type="submit" disabled={isSubmitting}>
                                 <div className="cta-button group">
                                     <div className="bg-circle"/>
-                                    <p className="text">Send Message</p>
+                                    <p className="text">{isSubmitting ? 'Sending...' : 'Send Message'}</p>
                                     <div className="arrow-wrapper">
                                         <img src="/images/arrow-down.svg" alt="arrow" />
                                     </div>
