@@ -35,12 +35,12 @@ const Contact = () => {
     <section id="contact" className="flex-center section-padding">
         <div className="w-full h-full md:px-10 px-5">
             <TitleHeader 
-                title="Get In Touch With Me"
+                title="Connect for Advisory or Leadership Support"
                 sub="📧 Contact Information"
             />
             <div className="mt-16 grid-12-cols">
                 {/* Contact form - left side */}
-                <div className="xl:col-span-5">
+                <div className="xl:col-span-6 xl:col-start-4">
                     <div className="flex-center card-border rounded-xl p-10">
                         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-7">
                             <div>
@@ -61,7 +61,7 @@ const Contact = () => {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    placeholder="luisvel4693@gmail.com"
+                                    placeholder="Your email address"
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
@@ -93,11 +93,11 @@ const Contact = () => {
                     </div>
                 </div>
                 {/* 3D Experience- right side */}
-                <div className="xl:col-span-7 min-h-96">
+                {/* <div className="xl:col-span-7 min-h-96">
                     <div className="w-full h-full bg-[#cd7c2e] hover:cursor-grab rounded-3xl overflow-hidden">
                         <ContactExperience/>
                     </div>
-                </div>
+                </div> */}
                
             </div>
         </div>
