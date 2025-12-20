@@ -6,13 +6,16 @@ AWS_PROFILE="admin"
 AWS_ACCOUNT_ID="378743674489"
 AWS_REGION="us-east-1"
 IMAGE_NAME="portfolio-app"
-APP_RUNNER_SERVICE_ARN="arn:aws:apprunner:us-east-1:378743674489:service/portfolio-app-3/3d98b5460c7f46ee90904f8a23d742e6"
+APP_RUNNER_SERVICE_ARN="arn:aws:apprunner:us-east-1:378743674489:service/portfolio-app/d765a3ecb17a4dac83ee39280d7102ad"
 # ========================
 
 ECR_URL="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${IMAGE_NAME}:latest"
 
+echo "=== Validating AWS credentials ==="
+aws sts get-caller-identity --profile ${AWS_PROFILE} >/dev/null
+
 echo "=== Building Docker image for amd64 ==="
-docker build --platform linux/amd64 -t ${IMAGE_NAME}:latest .
+docker build --platform linux/amd64 --no-cache -t ${IMAGE_NAME}:latest .
 
 echo "=== Tagging image for ECR ==="
 docker tag ${IMAGE_NAME}:latest ${ECR_URL}
