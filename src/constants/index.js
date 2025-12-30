@@ -117,6 +117,10 @@ const abilities = [
 ];
 
 const techStackImgs = [
+  //  {
+  //   name: "AWS",
+  //   imgPath: "/images/logos/aws.png",
+  // },
   {
     name: "React Developer",
     imgPath: "/images/logos/react.png",

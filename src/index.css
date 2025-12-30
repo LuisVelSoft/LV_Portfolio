@@ -81,7 +81,7 @@ section {
   }
 
   .hero-layout {
-    @apply relative z-10 xl:mt-10 mt-20 md:h-auto h-[80vh] grid items-start;
+    @apply relative z-10 xl:mt-10 mt-20 h-auto grid items-start;
     grid-template-rows: auto auto auto;
     gap: 0rem;
   }
@@ -269,6 +269,16 @@ section {
 
   .marquee-item {
     @apply md:w-40 w-32;
+  }
+
+  .timeline-wrapper {
+    @apply absolute top-0 md:left-4 left-11 h-full flex justify-center;
+  }
+
+  @media (min-width: 1280px) {
+    .timeline-wrapper {
+      left: 36.6vw;
+    }
   }
 
   .timeline-wrapper {
