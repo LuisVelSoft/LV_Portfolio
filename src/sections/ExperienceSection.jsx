@@ -19,9 +19,9 @@ const ExperienceSection = () => {
   const lineRef = useRef(null);
   const timelineAnimRef = useRef(null);
 
-  // NEW: separate refs for mobile and desktop logos
   const logoMobileRef = useRef(null);
   const logoDesktopRef = useRef(null);
+  const lastHeightRef = useRef(null);
 
   // Cards and text animations
   useGSAP(() => {
@@ -52,7 +52,6 @@ const ExperienceSection = () => {
     });
   }, []);
 
-  // Wait for images inside an element to load (with timeout)
   const waitForImages = (container, timeout = 1000) =>
     new Promise((resolve) => {
       if (!container) return resolve();
@@ -94,7 +93,6 @@ const ExperienceSection = () => {
       setTimeout(onDone, timeout);
     });
 
-  // Position the line and create the timeline animation after geometry is stable
   useEffect(() => {
     if (!wrapperRef.current || !lineRef.current) return;
 
@@ -104,8 +102,8 @@ const ExperienceSection = () => {
     // Base styles
     lineEl.style.position = 'absolute';
     lineEl.style.top = '0px';
-    lineEl.style.left = '0px';        // use JS to position horizontally
-    lineEl.style.transform = 'none';  // no CSS centering, JS controls it
+    lineEl.style.left = '0px';
+    lineEl.style.transform = 'none';
     lineEl.style.width = '2px';
     lineEl.style.zIndex = '0';
     lineEl.style.pointerEvents = 'none';
@@ -123,17 +121,13 @@ const ExperienceSection = () => {
             timelineAnimRef.current.scrollTrigger.kill();
           }
           timelineAnimRef.current.kill();
-        } catch (e) {
-          // ignore
-        }
+        } catch (e) {}
         timelineAnimRef.current = null;
       }
 
-      // Ensure visible before animating
       lineEl.style.visibility = 'visible';
       lineEl.style.opacity = '1';
 
-      // Animate CSS height from 0px to fullHeight using GSAP
       timelineAnimRef.current = gsap.fromTo(
         lineEl,
         { height: '0px' },
@@ -149,74 +143,77 @@ const ExperienceSection = () => {
         }
       );
 
-      // Refresh and, for Edge only, dispatch a single resize event as a one-time nudge
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           try {
             if (timelineAnimRef.current.scrollTrigger) {
               timelineAnimRef.current.scrollTrigger.refresh();
             }
-          } catch (e) {
-            // ignore
-          }
-          ScrollTrigger.refresh();
+          } catch (e) {}
 
           if (isEdgeBrowser()) {
-            // single, harmless resize event to trigger Edge paint
             window.dispatchEvent(new Event('resize'));
           }
         });
       });
     };
 
-    const updateLine = () => {
-      const wrapperRect = wrapperEl.getBoundingClientRect();
+    // -----------------------------
+    // 🔥 NEW: Micro‑throttle wrapper
+    // -----------------------------
+    let updateScheduled = false;
 
-      // Decide which logo to align to based on viewport
-      const isDesktop = window.matchMedia('(min-width: 768px)').matches;
-
-      let targetEl = null;
-      if (isDesktop) {
-        // Prefer desktop logo, fall back to mobile if needed
-        targetEl = logoDesktopRef.current || logoMobileRef.current;
-      } else {
-        // Prefer mobile logo, fall back to desktop if needed
-        targetEl = logoMobileRef.current || logoDesktopRef.current;
-      }
-
-      let leftPx;
-      if (targetEl) {
-        const logoRect = targetEl.getBoundingClientRect();
-        leftPx = logoRect.left - wrapperRect.left + logoRect.width / 2;
-      } else {
-        // Fallback: center of wrapper
-        leftPx = wrapperRect.width / 2;
-      }
-
-      lineEl.style.left = `${leftPx}px`;
-
-      const finalHeight = wrapperEl.offsetHeight;
-      lineEl.style.height = '0px';
-
-      ScrollTrigger.refresh();
+    const scheduleUpdateLine = () => {
+      if (updateScheduled) return;
+      updateScheduled = true;
 
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          createHeightAnimation(finalHeight);
-          ScrollTrigger.refresh();
-        });
+        updateLine();
+        updateScheduled = false;
       });
     };
 
-    let cancelled = false;
+    const updateLine = () => {
+    // Cache wrapper rect once
+    const wrapperRect = wrapperEl.getBoundingClientRect();
+    const wrapperHeight = wrapperEl.offsetHeight; // read once
+
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+
+    let targetEl = null;
+    if (isDesktop) {
+      targetEl = logoDesktopRef.current || logoMobileRef.current;
+    } else {
+      targetEl = logoMobileRef.current || logoDesktopRef.current;
+    }
+
+    let leftPx;
+    if (targetEl) {
+      // Cache logo rect once
+      const logoRect = targetEl.getBoundingClientRect();
+      leftPx = logoRect.left - wrapperRect.left + logoRect.width / 2;
+    } else {
+      leftPx = wrapperRect.width / 2;
+    }
+
+    lineEl.style.left = `${leftPx}px`;
+
+    // Force synchronous layout read to ensure first paint (Edge fix)
+    lineEl.getBoundingClientRect();
+
+    // Use cached height
+    lineEl.style.height = '0px';
+    createHeightAnimation(wrapperHeight);
+  };
+
+  let cancelled = false;
+
     const orchestrate = async () => {
       try {
         if (document.fonts && document.fonts.ready) {
           await document.fonts.ready;
         }
-      } catch (e) {
-        // ignore
-      }
+      } catch (e) {}
 
       await waitForImages(wrapperEl, 1000);
 
@@ -238,21 +235,19 @@ const ExperienceSection = () => {
 
       setTimeout(() => {
         if (cancelled) return;
-        updateLine();
+        scheduleUpdateLine(); // 🔥 throttled
       }, 30);
     };
 
     orchestrate();
 
     const ro = new ResizeObserver(() => {
-      updateLine();
+      scheduleUpdateLine(); // 🔥 throttled
     });
 
     ro.observe(wrapperEl);
-    if (logoMobileRef.current) ro.observe(logoMobileRef.current);
-    if (logoDesktopRef.current) ro.observe(logoDesktopRef.current);
-
-    const onResize = () => updateLine();
+    
+    const onResize = () => scheduleUpdateLine(); // 🔥 throttled
     window.addEventListener('resize', onResize);
 
     return () => {
@@ -265,9 +260,7 @@ const ExperienceSection = () => {
             timelineAnimRef.current.scrollTrigger.kill();
           }
           timelineAnimRef.current.kill();
-        } catch (e) {
-          // ignore
-        }
+        } catch (e) {}
         timelineAnimRef.current = null;
       }
     };
@@ -302,7 +295,6 @@ const ExperienceSection = () => {
             }}
           />
 
-          {/* GRID WRAPPER */}
           <div
             className="
               grid 
@@ -314,7 +306,6 @@ const ExperienceSection = () => {
           >
             {expCards.map((card, index) => (
               <React.Fragment key={card.title}>
-                {/* BELOW md: logo + line in column 1 */}
                 <div
                   className="flex justify-center md:hidden"
                   ref={index === 0 ? logoMobileRef : null}
@@ -330,7 +321,6 @@ const ExperienceSection = () => {
                   </div>
                 </div>
 
-                {/* BELOW md: text in column 2 */}
                 <div className="expText md:hidden">
                   <h1 className="font-semibold text-3xl">{card.title}</h1>
                   <p className="my-5 text-white-50">📆 {card.date}</p>
@@ -344,23 +334,19 @@ const ExperienceSection = () => {
                   </ul>
                 </div>
 
-                {/* BELOW md: card stacked under text, right-aligned, same column width as text */}
                 <div className="md:hidden col-start-2 justify-self-end">
                   <GlowCard card={card}>
                     <img src={card.imgPath} alt={card.title} />
                   </GlowCard>
                 </div>
 
-                {/* md AND UP: 3-column layout */}
                 <div className="hidden md:flex timeline-card items-start gap-10 col-span-3">
-                  {/* Card column (max 30vw) */}
                   <div className="w-full md:max-w-[30vw]">
                     <GlowCard card={card}>
                       <img src={card.imgPath} alt={card.title} />
                     </GlowCard>
                   </div>
 
-                  {/* Logo + line column */}
                   <div
                     className="relative w-16 flex justify-center mt-6"
                     ref={index === 0 ? logoDesktopRef : null}
@@ -376,7 +362,6 @@ const ExperienceSection = () => {
                     </div>
                   </div>
 
-                  {/* Text column */}
                   <div className="expText flex-1 relative z-20">
                     <h1 className="font-semibold text-3xl">{card.title}</h1>
                     <p className="my-5 text-white-50">📆 {card.date}</p>
