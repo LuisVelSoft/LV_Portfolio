@@ -117,16 +117,12 @@ const abilities = [
 ];
 
 const techStackImgs = [
-  //  {
-  //   name: "AWS",
-  //   imgPath: "/images/logos/aws.png",
-  // },
   {
     name: "React Developer",
     imgPath: "/images/logos/react.png",
   },
   {
-    name: "Python Developer",
+    name: "Python",
     imgPath: "/images/logos/python.svg",
   },
   {
@@ -138,38 +134,38 @@ const techStackImgs = [
     imgPath: "/images/logos/three.png",
   },
   {
-    name: "Project Manager",
+    name: "Project Management",
     imgPath: "/images/logos/git.svg",
   },
 ];
 
 const techStackIcons = [
   {
-    name: "React Developer",
+    name: "React",
     modelPath: "/models/react_logo-transformed.glb",
     scale: 1,
     rotation: [0, 0, 0],
   },
   {
-    name: "Python Developer",
+    name: "Python",
     modelPath: "/models/python-transformed.glb",
     scale: 0.8,
     rotation: [0, 0, 0],
   },
   {
-    name: "Backend Developer",
+    name: "Node.js",
     modelPath: "/models/node-transformed.glb",
     scale: 5,
     rotation: [0, -Math.PI / 2, 0],
   },
   {
-    name: "Interactive Developer",
-    modelPath: "/models/three.js-transformed.glb",
-    scale: 0.05,
+    name: "C# & ASP.NET",
+    modelPath: "/models/csharp-logo.glb",
+    scale: 1,
     rotation: [0, 0, 0],
   },
   {
-    name: "Project Manager",
+    name: "SDLC Expert",
     modelPath: "/models/git-svg-transformed.glb",
     scale: 0.05,
     rotation: [0, -Math.PI / 4, 0],
@@ -186,11 +182,11 @@ const expCards = [
   date: "August 2024 - Present",
   responsibilities: [
     "Strategic Advisory: Delivered insights on AI-driven underwriting, geospatial risk modeling, and compliance automation through expert networks (ProSapient, AlphaSights).",
-    "Compliance & Security: Advised law firm Bradley K. Boyd on secure digital intake workflows, network storage, and compliance posture, improving operational efficiency.",
+    "Compliance & Security: Advised law firm on secure digital intake workflows, network storage, and compliance posture, improving operational efficiency.",
     "Operational Excellence: Guided executive stakeholders on tool selection, workflow optimization, and SOC2/HIPAA/PCI-DSS compliance, ensuring scalable, audit-ready platforms.",
     "Talent Strategy: Provided direction for hiring elite onshore/offshore full-stack engineers, aligning engineering processes with business goals.",
     "Agile & Delivery: Recommended best practices for Agile development, CI/CD pipelines, and cybersecurity, ensuring secure, high-quality software delivery.",
-    "Client Collaboration: Partnered with organizations including Bradley K. Boyd, ProSapient, and AlphaSights to deliver tailored engineering strategies and solutions."
+    "Client Collaboration: Partnered with organizations including the Law Firm of Bradley K. Boyd, P.A., ProSapient, and AlphaSights to deliver tailored engineering strategies and solutions."
     ],
   },
 
